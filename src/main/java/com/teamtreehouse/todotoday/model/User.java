@@ -14,7 +14,7 @@ import java.util.List;
 public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(unique = true)
     @Size(min = 8, max = 20)
@@ -35,6 +35,14 @@ public class User implements UserDetails{
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(role.getName()));
         return authorities;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
