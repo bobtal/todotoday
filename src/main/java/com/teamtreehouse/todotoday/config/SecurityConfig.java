@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
             .logout()
                 .permitAll()
-                .logoutSuccessUrl("/login");
+//                .logoutSuccessHandler(logoutSuccessHandler());
+                // OR like this without needing the method
+                 .logoutSuccessUrl("/login");
     }
 
     public AuthenticationSuccessHandler loginSuccessHandler() {
@@ -61,5 +64,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             request.getSession().setAttribute("flash", new FlashMessage("Incorrect username and/or password. Please try again.", FlashMessage.Status.FAILURE));
             response.sendRedirect("/login");
         };
+    }
+
+    // method not needed/used if using simply .logoutSuccessUrl("/login");
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return (request, response, authentication) -> response.sendRedirect("/login");
     }
 }

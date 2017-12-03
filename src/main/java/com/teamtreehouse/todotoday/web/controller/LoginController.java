@@ -20,7 +20,8 @@ public class LoginController {
 
             request.getSession().removeAttribute("flash");
         } catch (Exception ex) {
-            // "flash" session attribute must not exist...do nothing and proceed normally
+            // It means "flash" session attribute does not exist...
+            // do nothing and proceed normally
         }
         return "login";
     }
