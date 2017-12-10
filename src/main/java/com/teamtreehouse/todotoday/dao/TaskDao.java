@@ -12,6 +12,7 @@ import java.util.List;
 
 @Repository
 public interface TaskDao extends CrudRepository<Task, Long> {
+    // Java Persistence Query Language JPQL
     @Query("select t from Task t where t.user.id=:#{principal.id}")
     List<Task> findAll();
 }

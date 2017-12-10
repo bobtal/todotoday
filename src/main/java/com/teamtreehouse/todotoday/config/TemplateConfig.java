@@ -7,6 +7,10 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 
+// The purpose of this class is adding the Spring Security Thymeleaf dialect
+// (sec: namespace in templates)
+// sec:authentication="name" in layout.html has the same effect as ${principal.name}
+// if we added Principal principal object to the model map we sent to the view
 @Configuration
 public class TemplateConfig {
     @Bean
@@ -22,6 +26,7 @@ public class TemplateConfig {
     public SpringTemplateEngine templateEngine() {
         final SpringTemplateEngine springTemplateEngine = new SpringTemplateEngine();
         springTemplateEngine.addTemplateResolver(templateResolver());
+        // adding the Spring Security Thymeleaf dialect
         springTemplateEngine.addDialect(new SpringSecurityDialect());
         return springTemplateEngine;
     }

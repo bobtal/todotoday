@@ -87,6 +87,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return (request, response, authentication) -> response.sendRedirect("/login");
     }
 
+    // To expose authentication data so we would have access to the principal object
+    // in JPQL queries using Spring Expression Language (SpEL) in TaskDao
     @Bean
     public EvaluationContextExtension securityExtension() {
         return new EvaluationContextExtensionSupport() {
@@ -95,6 +97,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 return "security";
             }
 
+            // in order to expose the authentication object
             @Override
             public Object getRootObject() {
                 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
